@@ -1,0 +1,201 @@
+'use client'
+
+import { useState, useEffect, useRef } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Raleway } from "next/font/google";
+import { Navbar } from '@/components/navbar';
+import { HomeHero } from '@/components/home-hero';
+
+const raleway = Raleway({ weight: ["400", "500", "600", "700", "900"], subsets: ["latin"] });
+
+// How We Work Component
+const HowWeWork = () => (
+  <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-zinc-900">
+    <div className="max-w-4xl mx-auto">
+      <h2 className="text-3xl font-bold text-white text-center mb-12">
+        How We Work
+      </h2>
+      <div className="space-y-8">
+        {[
+          { step: "01", title: "Understand", desc: "We listen before we build" },
+          { step: "02", title: "Strategize", desc: "Clarity drives every decision" },
+          { step: "03", title: "Execute", desc: "Systems that scale with trust" }
+        ].map((item, i) => (
+          <div key={i} className="flex gap-6 items-start">
+            <span className="text-4xl font-bold text-white/40">{item.step}</span>
+            <div>
+              <h3 className="text-2xl font-bold text-white">{item.title}</h3>
+              <p className="text-white/70 mt-2">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+// Brand Growth Systems Component
+const BrandGrowthSystems = () => (
+  <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <h2 className="text-3xl font-bold text-white text-center mb-12">
+      Brand & Growth Systems
+    </h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <Card className="border-gray-800 bg-gradient-to-br from-zinc-900 to-black">
+        <CardContent className="p-8">
+          <h3 className="text-2xl font-bold text-white mb-4">Brand Strategy</h3>
+          <p className="text-white/70">Position with purpose and clarity</p>
+        </CardContent>
+      </Card>
+      <Card className="border-gray-800 bg-gradient-to-br from-zinc-900 to-black">
+        <CardContent className="p-8">
+          <h3 className="text-2xl font-bold text-white mb-4">Growth Systems</h3>
+          <p className="text-white/70">Scale with systems that compound</p>
+        </CardContent>
+      </Card>
+    </div>
+  </section>
+);
+
+export default function App() {
+const [showVideo, setShowVideo] = useState(false);
+const [videoEnded, setVideoEnded] = useState(false);
+const videoRef = useRef<HTMLVideoElement>(null);
+
+useEffect(() => {
+  const hasPlayedVideo = sessionStorage.getItem('brandIntroPlayed');
+  
+  if (!hasPlayedVideo) {
+    setShowVideo(true);
+  }
+}, []);
+
+useEffect(() => {
+  if (videoRef.current && showVideo) {
+    videoRef.current.play().catch(err => {
+      console.log("Auto-play prevented:", err);
+    });
+  }
+}, [showVideo]);
+
+const handleVideoEnd = () => {
+  setVideoEnded(true);
+  sessionStorage.setItem('brandIntroPlayed', 'true');
+  setTimeout(() => {
+    setShowVideo(false);
+  }, 500);
+};
+
+const skipVideo = () => {
+  sessionStorage.setItem('brandIntroPlayed', 'true');
+  setShowVideo(false);
+};
+
+if (showVideo) {
+  return (
+    <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+      <div className="relative w-full h-full flex items-center justify-center">
+        <video
+          ref={videoRef}
+          className={`w-full h-full object-contain transition-opacity duration-500 ${videoEnded ? 'opacity-0' : 'opacity-100'}`}
+          onEnded={handleVideoEnd}
+          playsInline
+          muted
+        >
+          <source src="/brandandbrandzLogo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
+        <button
+          onClick={skipVideo}
+          className="absolute cursor-pointer bottom-8 right-8 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg backdrop-blur-sm transition-all"
+        >
+          Skip Intro
+        </button>
+      </div>
+    </div>
+  );
+}
+
+  return (
+    <div className={"bg-black text-white bg-[radial-gradient(ellipse_150%_20%_at_50%_0%,#adbac9_0%,rgba(0,0,0,0)_45%)] relative pt-6 " + raleway.className}>
+      <Navbar />
+
+      <main>
+        <HomeHero />
+
+        <div className="relative z-10 bg-black">
+          <section className="py-20 text-center px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-white">
+              Strong brands are not rushed.
+            </h2>
+            <p className="text-lg mt-2 text-white/80">They are designed with intention.</p>
+            <div className="mt-8 text-2xl text-white space-y-2">
+              <p>We focus on <span className="font-extrabold text-white">clarity</span> before creativity</p>
+              <p><span className="font-extrabold text-white">systems</span> before scale</p>
+              <p><span className="font-extrabold text-white">trust</span> before attention</p>
+            </div>
+            <p className="mt-8 text-lg text-white/60">This is how enduring brands are built.</p>
+          </section>
+
+          <BrandGrowthSystems />
+
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#1e3a5f]/20 to-[#0A0A0A] text-center">
+            <h2 className="text-3xl font-bold text-white">Intelligence, applied thoughtfully.</h2>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-white/80">
+              We integrate AI where it truly matters <br /> to understand customers, improve decisions and scale responsibly.
+            </p>
+            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 justify-center gap-6 max-w-4xl mx-auto">
+              {["Listen to real customer behavior", "Personalize digital experiences", "Automate intelligently", "Turn data into clarity"].map((text, i) => (
+                <div key={i} className="w-full px-6 py-3 rounded-xl border border-white/20 flex items-center gap-4 text-white hover:bg-white/5 transition-colors">
+                  <span className="font-semibold text-2xl text-white">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{text}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-12 text-sm text-white/60">AI supports the brand. <br /> Human strategy leads it.</p>
+          </section>
+
+          <section className="py-20 px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold text-white">Beyond Consulting. We Build Platforms.</h2>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-white/80">
+              Some problems require more than advice. They require systems.
+            </p>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <Card className="border-gray-800 text-white bg-gradient-to-br from-zinc-800 to-black text-left">
+                <CardContent className="p-8">
+                  <h3 className="font-medium text-3xl mb-2">DailyGo</h3>
+                  <p className="text-lg text-white/70">Verified Gigforce & Student Earning Platform</p>
+                </CardContent>
+              </Card>
+              <Card className="border-gray-800 text-white bg-black/50 text-left border border-white/10">
+                <CardContent className="p-8">
+                  <h3 className="font-medium text-3xl mb-2">Unifiro</h3>
+                  <p className="text-lg text-white/70">One Platform for Registrations. <br /> Payments and Management.</p>
+                </CardContent>
+              </Card>
+            </div>
+            <p className="mt-12 max-w-3xl mx-auto text-lg text-white/80">
+              Through our products, we solve real-world trust gaps connecting digital intelligence with on-ground execution.
+            </p>
+            <p className="italic text-sm mt-4 text-white/50">"When trust is built into the system, growth follows naturally."</p>
+          </section>
+
+          <HowWeWork />
+
+          <section className="py-20 px-4 sm:px-6 lg:px-8 text-center bg-gradient-to-r from-zinc-400 via-[#70879f] to-sky-700">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white">A strong brand doesn't need to shout.</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mt-2">It needs to be clear.</h2>
+            <p className="mt-4 max-w-xl mx-auto text-lg">
+              It earns trust before attention and belief before growth. That's what we build at Brand & Brandz.
+            </p>
+            <Button variant="outline" className="mt-8 border-white bg-transparent px-12 py-6">
+              Begin Your Brand Journey
+            </Button>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+}
