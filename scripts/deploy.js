@@ -51,6 +51,7 @@ async function deployToHostinger() {
       host: process.env.FTP_HOST,
       user: process.env.FTP_USER,
       password: process.env.FTP_PASS,
+      port: process.env.FTP_PORT || 21,
       secure: false,
     });
 
@@ -60,7 +61,7 @@ async function deployToHostinger() {
     await client.cd(REMOTE_DIR);
     await client.clearWorkingDir();
     await client.uploadFromDir(LOCAL_DIR);
-    
+
     console.log("🚀 Deployed successfully to Hostinger!");
   } catch (err) {
     console.error("❌ Deployment failed:", err);

@@ -60,12 +60,12 @@ export function SiteFooter() {
                         Let's do: Col 1 (Logo/Social), Col 2 (Home), Col 3 (Support).
                         Actually grid-cols-4 allows spacing: Logo (2 cols), Home (1), Support (1).
                     */}
-                    <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
+                    <div className="lg:col-span-2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left space-y-4">
                         {/* Logo with Antigravity Float */}
                         <motion.div
                             animate={{ y: [0, -5, 0] }}
                             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                            className="relative w-48 h-auto"
+                            className="relative w-48 h-auto flex justify-center items-center"
                         >
                             <Link href={"/"}>
                                 <Image

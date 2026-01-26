@@ -6,57 +6,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Raleway } from "next/font/google";
 import { Navbar } from '@/components/navbar';
 import { HomeHero } from '@/components/home-hero';
+import { HowWeWork } from '@/components/how-we-work';
+import { BrandGrowthSystems } from '@/components/brand-growth-systems';
 
 const raleway = Raleway({ weight: ["400", "500", "600", "700", "900"], subsets: ["latin"] });
 
-// How We Work Component
-const HowWeWork = () => (
-  <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-zinc-900">
-    <div className="max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-white text-center mb-12">
-        How We Work
-      </h2>
-      <div className="space-y-8">
-        {[
-          { step: "01", title: "Understand", desc: "We listen before we build" },
-          { step: "02", title: "Strategize", desc: "Clarity drives every decision" },
-          { step: "03", title: "Execute", desc: "Systems that scale with trust" }
-        ].map((item, i) => (
-          <div key={i} className="flex gap-6 items-start">
-            <span className="text-4xl font-bold text-white/40">{item.step}</span>
-            <div>
-              <h3 className="text-2xl font-bold text-white">{item.title}</h3>
-              <p className="text-white/70 mt-2">{item.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-// Brand Growth Systems Component
-const BrandGrowthSystems = () => (
-  <section className="py-20 px-4 sm:px-6 lg:px-8">
-    <h2 className="text-3xl font-bold text-white text-center mb-12">
-      Brand & Growth Systems
-    </h2>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      <Card className="border-gray-800 bg-gradient-to-br from-zinc-900 to-black">
-        <CardContent className="p-8">
-          <h3 className="text-2xl font-bold text-white mb-4">Brand Strategy</h3>
-          <p className="text-white/70">Position with purpose and clarity</p>
-        </CardContent>
-      </Card>
-      <Card className="border-gray-800 bg-gradient-to-br from-zinc-900 to-black">
-        <CardContent className="p-8">
-          <h3 className="text-2xl font-bold text-white mb-4">Growth Systems</h3>
-          <p className="text-white/70">Scale with systems that compound</p>
-        </CardContent>
-      </Card>
-    </div>
-  </section>
-);
 
 export default function App() {
 const [showVideo, setShowVideo] = useState(false);

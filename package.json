@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap --config next-sitemap.config.cjs",
+    "export": "next export",
+    "deploy": "node scripts/deploy.js",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"
