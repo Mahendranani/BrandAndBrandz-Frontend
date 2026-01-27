@@ -52,12 +52,12 @@ export function BrandGrowthSystems() {
                                 key={service.id}
                                 onMouseEnter={() => setActiveIndex(index)}
                                 className={`flex items-center px-4 py-4 rounded-xl border cursor-pointer transition-all duration-300 ${activeindex === index
-                                        ? 'bg-gradient-to-r from-blue-900/60 to-transparent border-blue-500/50'
-                                        : 'border-white/20 hover:border-white/50'
+                                    ? 'bg-gradient-to-r from-zinc-400 via-[#70879f] to-sky-700 border-transparent'
+                                    : 'border-white/20 hover:border-white/50'
                                     }`}
                             >
                                 <span
-                                    className={`font-semibold text-3xl mr-4 transition-colors duration-300 ${activeindex === index ? 'text-blue-400' : 'text-white/50'
+                                    className={`font-semibold text-3xl mr-4 transition-colors duration-300 ${activeindex === index ? 'text-white' : 'text-white/50'
                                         }`}
                                 >
                                     {service.id}

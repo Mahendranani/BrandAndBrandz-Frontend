@@ -24,7 +24,7 @@ export function Navbar() {
                         <Link href="/products" className="text-lg hover:text-white hidden md:block">
                             Products
                         </Link>
-                        <Link href="#" className="text-lg hover:text-white hidden md:block">
+                        <Link href="/more" className="text-lg hover:text-white hidden md:block">
                             More
                         </Link>
                         <Link href="/contact" className="hidden md:block">

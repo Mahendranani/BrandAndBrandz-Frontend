@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Raleway } from "next/font/google";
 import { EngagementCovers } from "@/components/about/engagement-covers";
+import { Timeline } from "@/components/about/timeline";
 import { ProcessExperience } from "@/components/about/process-experience";
 import { WhatWeHelp } from "@/components/about/what-we-help";
 import { HowItWorks } from "@/components/about/how-it-works";
@@ -50,6 +51,7 @@ export default function About() {
                 <ProcessExperience />
                 <WhatWeHelp />
                 <HowItWorks />
+                <Timeline />
                 <StrategyCTA />
             </main>
 
