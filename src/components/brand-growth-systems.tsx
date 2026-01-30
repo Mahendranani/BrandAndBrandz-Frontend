@@ -51,7 +51,7 @@ export function BrandGrowthSystems() {
                             <div
                                 key={service.id}
                                 onMouseEnter={() => setActiveIndex(index)}
-                                className={`flex items-center px-4 py-4 rounded-xl border cursor-pointer transition-all duration-300 ${activeindex === index
+                                className={`flex items-center px-4 py-2 rounded-xl border cursor-pointer transition-all duration-300 ${activeindex === index
                                     ? 'bg-gradient-to-r from-zinc-400 via-[#70879f] to-sky-700 border-transparent'
                                     : 'border-white/20 hover:border-white/50'
                                     }`}
@@ -78,7 +78,7 @@ export function BrandGrowthSystems() {
                         </Button>
                     </div>
                 </div>
-                <div className="relative w-full max-w-[500px] aspect-[4/5] sm:min-h-[600px]">
+                <div className="relative w-full max-w-[500px] h-[500px]">
                     {services.map((service, index) => (
                         <Image
                             key={service.title}

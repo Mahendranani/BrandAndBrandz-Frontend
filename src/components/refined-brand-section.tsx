@@ -1,111 +1,86 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring, useMotionTemplate } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
-export function RefinedBrandSection() {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
-
-    // Weighted Floating Motion (Parallax)
-    // Slower speed for the main headline (heavier feel)
-    const yHeadline = useTransform(scrollYProgress, [0, 1], [100, -50]);
-    // Faster speed for secondary lines (weightless drift)
-    const yLines = useTransform(scrollYProgress, [0, 1], [150, -150]);
-
-    // Spring smoothing for smoother parallax
-    const smoothYHeadline = useSpring(yHeadline, { stiffness: 100, damping: 20 });
-    const smoothYLines = useSpring(yLines, { stiffness: 100, damping: 20 });
-
-    // Scroll-Linked Color Reveal & Blur
-    // As we scroll through, text goes from dim/blurred to sharp/white
-    const opacity = useTransform(scrollYProgress, [0.3, 0.5, 0.8], [0.2, 1, 0.2]); // Adjusted range
-    const blurValue = useTransform(scrollYProgress, [0.3, 0.5, 0.8], [8, 0, 8]); // Blur amount in px
-    const blurFilter = useMotionTemplate`blur(${blurValue}px)`;
-
+// Character Reveal Component with Bold Support
+function RevealChar({ char, progress, isBold }: { char: string, progress: any, isBold?: boolean }) {
     return (
-        <section
-            ref={containerRef}
-            className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden min-h-[80vh] flex flex-col items-center justify-center"
-        >
-            {/* Main Headline - Heavy & Deliberate */}
-            <motion.div
-                style={{ y: smoothYHeadline, opacity, filter: blurFilter }}
-                className="mb-12 relative z-10"
+        <span className="relative">
+            <span className={`opacity-20 text-gray-500 ${isBold ? "font-bold" : ""}`}>{char}</span>
+            <motion.span
+                style={{ opacity: progress }}
+                className={`absolute left-0 top-0 text-white ${isBold ? "font-bold" : ""}`}
             >
-                <h2 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight leading-tight">
-                    Strong brands <br className="hidden sm:block" /> are not rushed.
-                </h2>
-                <p className="text-xl sm:text-2xl mt-4 text-white/60 font-light tracking-wide">
-                    They are designed with intention.
-                </p>
-            </motion.div>
-
-            {/* Floating Values - Weightless & Glowing */}
-            <motion.div
-                style={{ y: smoothYLines }}
-                className="space-y-6 sm:space-y-8 relative z-10"
-            >
-                <FloatingLine
-                    textBefore="We focus on"
-                    highlight="clarity"
-                    textAfter="before creativity"
-                    delay={0}
-                />
-                <FloatingLine
-                    textBefore=""
-                    highlight="systems"
-                    textAfter="before scale"
-                    delay={0.1}
-                />
-                <FloatingLine
-                    textBefore=""
-                    highlight="trust"
-                    textAfter="before attention"
-                    delay={0.2}
-                />
-            </motion.div>
-
-            {/* Footer Text */}
-            <motion.p
-                style={{ opacity: useTransform(scrollYProgress, [0.6, 0.8], [0, 1]) }}
-                className="mt-16 text-lg text-white/40 italic font-light"
-            >
-                This is how enduring brands are built.
-            </motion.p>
-
-            {/* Background Atmosphere - Optional subtle glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-screen" />
-        </section>
-    );
+                {char}
+            </motion.span>
+        </span>
+    )
 }
 
-// Sub-component for individual floating lines with scroll reveals
-function FloatingLine({ textBefore, highlight, textAfter, delay }: { textBefore: string, highlight: string, textAfter: string, delay: number }) {
+function QuoteLine({ segments, progress, range }: { segments: { text: string, bold?: boolean }[], progress: any, range: [number, number] }) {
+    // Map global section progress to this line's processing range (0 to 1)
+    const lineProgress = useTransform(progress, range, [0, 1]);
+
+    const fullText = segments.map(s => s.text).join("");
+    let charGlobalIndex = 0;
+
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay, ease: "easeOut" }}
-            className="text-2xl sm:text-4xl md:text-5xl font-light text-white/30 flex items-center justify-center gap-3 flex-wrap"
-        >
-            {textBefore && <span>{textBefore}</span>}
+        <p className="text-4xl sm:text-5xl lg:text-6xl font-light leading-tight tracking-tight">
+            {segments.map((segment, segmentIndex) => (
+                <span key={segmentIndex} className={segment.bold ? "font-bold" : ""}>
+                    {segment.text.split("").map((char, charIndex) => {
+                        const start = charGlobalIndex / fullText.length;
+                        const end = start + (1 / fullText.length);
+                        // Character lights up based on line's local progress
+                        const charProgress = useTransform(lineProgress, [start, end], [0, 1]);
+                        charGlobalIndex++;
 
-            <motion.span
-                className="font-bold text-white relative inline-block"
-                whileHover={{ scale: 1.05 }}
-                style={{
-                    textShadow: "0 0 20px rgba(59, 130, 246, 0.6), 0 0 10px rgba(59, 130, 246, 0.4)" // Neon Blue Glow
-                }}
-            >
-                {highlight}
-            </motion.span>
+                        return (
+                            <RevealChar key={`${segmentIndex}-${charIndex}`} char={char} progress={charProgress} isBold={segment.bold} />
+                        )
+                    })}
+                </span>
+            ))}
+        </p>
+    )
+}
 
-            <span>{textAfter}</span>
-        </motion.div>
+export function RefinedBrandSection() {
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start 0.9", "end 0.6"] // Adjusts when the whole sequence plays
+    });
+
+    return (
+        <section className="py-32 px-4 sm:px-6 lg:px-8 bg-black text-center">
+
+            {/* Header */}
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                Strong brands are not rushed.
+            </h2>
+            <p className="text-base sm:text-lg text-white/50 mb-16 uppercase tracking-widest">
+                They are designed with intention.
+            </p>
+
+            {/* Scroll Reveal Content */}
+            <div ref={containerRef} className="max-w-5xl mx-auto">
+                <QuoteLine
+                    progress={scrollYProgress}
+                    range={[0, 1]}
+                    segments={[
+                        { text: "We focus on " },
+                        { text: "clarity", bold: true },
+                        { text: " before creativity, " },
+                        { text: "systems", bold: true },
+                        { text: " before scale, " },
+                        { text: "trust", bold: true },
+                        { text: " before attention" }
+                    ]} />
+            </div>
+
+            <p className="mt-16 text-lg text-white/40">This is how enduring brands are built.</p>
+        </section>
     );
 }

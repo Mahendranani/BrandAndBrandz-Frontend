@@ -5,6 +5,9 @@ import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { WhyJoinUs } from "@/components/why-join-us";
+import { OpenPositions } from "@/components/open-positions";
+import { StrategyCTA } from "@/components/strategy-cta";
 
 const raleway = Raleway({ weight: ["400", "500", "600", "700", "900"], subsets: ["latin"] });
 
@@ -16,7 +19,7 @@ export default function More() {
                 raleway.className
             }
         >
-            <div className="absolute inset-0 z-0 opacity-80">
+            <div className="fixed inset-0 z-0 opacity-80">
                 <Image
                     src="/morepage/herobg.webp"
                     alt="Background"
@@ -30,7 +33,7 @@ export default function More() {
             </div>
 
             <main className="flex flex-col w-full relative z-10">
-                <section className="flex flex-col items-center justify-center min-h-[80vh] px-4 sm:px-6 lg:px-8 text-center pt-8">
+                <section className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 text-center pt-8">
                     <div className="max-w-4xl mx-auto space-y-8 relative z-10">
                         {/* Animated Content Wrapper */}
                         <motion.div
@@ -59,20 +62,30 @@ export default function More() {
                             your career drives meaningful change, shapes a sustainable future and redefines
                             possibilities.
                         </motion.p>
-
-                        {/* CTA Button with more delay */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-                            className="pt-8"
-                        >
-                            <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-6 text-lg font-medium transition-all duration-300 transform hover:scale-105">
-                                View Open Roles
-                            </Button>
-                        </motion.div>
                     </div>
                 </section>
+
+                {/* View Open Roles Button Section */}
+                <div className="flex justify-center pb-8 relative z-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                    >
+                        <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-6 text-lg font-medium transition-all duration-300 transform hover:scale-105">
+                            View Open Roles
+                        </Button>
+                    </motion.div>
+                </div>
+
+                {/* Why Join Us Section */}
+                <WhyJoinUs />
+
+                {/* Open Positions Section */}
+                <OpenPositions />
+
+                {/* Strategy CTA Section */}
+                <StrategyCTA />
             </main>
 
             {/* Decorative gradient overlay at the bottom */}

@@ -32,7 +32,7 @@ export function ContactGrid() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
 
                 {/* Contact Info Cards (Left Column) */}
-                <div className="lg:col-span-1 space-y-6">
+                <div className="lg:col-span-1 flex flex-col justify-between space-y-6 lg:space-y-0 lg:h-full gap-6">
                     {contactInfo.map((info, idx) => (
                         <motion.a
                             key={idx}
@@ -42,15 +42,19 @@ export function ContactGrid() {
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: idx * 0.2, duration: 0.5, ease: "easeOut" }}
-                            className="block p-8 rounded-2xl bg-gradient-to-b from-[#1e3a5f]/40 to-[#0A0A0A] border border-white/5 hover:border-white/10 transition-colors group"
+                            transition={{ delay: idx * 0.15, duration: 0.5, ease: "easeOut" }}
+                            whileHover={{ scale: 1.02, x: 5 }}
+                            className="flex-1 flex flex-col items-center justify-center p-8 rounded-[30px] bg-gradient-to-r from-[#2B547E] via-[#1A2530] to-[#0A0A0A] border border-white/5 shadow-2xl relative overflow-hidden group"
                         >
-                            <div className="flex flex-col items-center text-center">
-                                <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                                    <info.icon className="w-5 h-5 text-white/80" strokeWidth={1.5} />
+                            {/* Inner Glow Effect */}
+                            <div className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
+
+                            <div className="relative z-10 flex flex-col items-center text-center">
+                                <div className="w-12 h-12 mb-5">
+                                    <info.icon className="w-full h-full text-white stroke-[1px]" />
                                 </div>
-                                <h3 className="text-white font-medium mb-2">{info.title}</h3>
-                                <p className="text-white/60 text-sm leading-relaxed max-w-[200px]">
+                                <h3 className="text-white text-lg font-bold mb-2">{info.title}</h3>
+                                <p className="text-gray-300 text-sm leading-relaxed max-w-[220px]">
                                     {info.content}
                                 </p>
                             </div>
@@ -64,51 +68,52 @@ export function ContactGrid() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4, duration: 0.6 }}
-                    className="lg:col-span-2 bg-[#121212] border border-[#333] rounded-2xl p-8 lg:p-10"
+                    className="lg:col-span-2 bg-[#0F0F0F] border border-[#333]/50 rounded-[30px] p-8 lg:p-12 shadow-2xl relative"
                 >
-                    <div className="mb-8">
-                        <h2 className="text-2xl font-semibold text-white mb-1">Get in Touch — Brand & Brandz</h2>
+                    <div className="absolute top-0 left-0 w-full h-full bg-[#111] rounded-[30px] -z-10" />
+                    <div className="mb-10">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Get in Touch — Brand & Brandz</h2>
                     </div>
 
                     <form className="space-y-6">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-white/80 ml-1">First Name *</label>
+                                <label className="text-xs font-bold text-white ml-1">First Name *</label>
                                 <input type="text" placeholder="John" className={inputClasses} />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-semibold text-white/80 ml-1">Last Name *</label>
+                                <label className="text-xs font-bold text-white ml-1">Last Name *</label>
                                 <input type="text" placeholder="Doe" className={inputClasses} />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-semibold text-white/80 ml-1">Business Email *</label>
-                            <input type="email" placeholder="life@company.com" className={inputClasses} />
+                            <label className="text-xs font-bold text-white ml-1">Business Email *</label>
+                            <input type="email" placeholder="Shivu@company.com" className={inputClasses} />
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-semibold text-white/80 ml-1">Company Name *</label>
+                            <label className="text-xs font-bold text-white ml-1">Company Name *</label>
                             <input type="text" placeholder="Your Company Name" className={inputClasses} />
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-semibold text-white/80 ml-1">Phone Number</label>
-                            <input type="tel" placeholder="+91 123-456-7890" className={inputClasses} />
+                            <label className="text-xs font-bold text-white ml-1">Phone Number</label>
+                            <input type="tel" placeholder="+91 123-45678" className={inputClasses} />
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-semibold text-white/80 ml-1">How can we help? *</label>
+                            <label className="text-xs font-bold text-white ml-1">How can we help? *</label>
                             <textarea
                                 rows={4}
                                 placeholder="Tell us about your IT challenges and objectives..."
-                                className={inputClasses}
+                                className={`${inputClasses} resize-none`}
                             />
                         </div>
 
                         <button
                             type="button"
-                            className="w-full py-4 mt-2 bg-gradient-to-r from-[#2d5a7b] to-[#4a6b8a] hover:from-[#3a6b8f] hover:to-[#5a7b9a] text-white font-medium rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg shadow-blue-900/20"
+                            className="w-full py-4 mt-4 bg-gradient-to-r from-[#5E7896] to-[#A9ACB1] hover:brightness-110 text-white text-lg font-medium rounded-xl transition-all duration-300 shadow-lg"
                         >
                             Schedule Meeting
                         </button>

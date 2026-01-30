@@ -82,9 +82,7 @@ export default function App() {
         <HomeHero />
 
         <div className="relative z-10 bg-black">
-
           <RefinedBrandSection />
-
 
           <BrandGrowthSystems />
 

@@ -13,7 +13,7 @@ export function StrategyCTA() {
 
     return (
         <section
-            className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden min-h-[400px] bg-gradient-to-r from-zinc-400 via-[#70879f] to-sky-700"
+            className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden min-h-[400px] border border-gray-800 text-white bg-gradient-to-r from-zinc-400 via-[#70879f] to-sky-700"
         >
             {/* Content */}
             <div className="container mx-auto max-w-4xl relative z-10 text-center">
